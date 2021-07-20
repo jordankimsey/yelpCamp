@@ -6,7 +6,15 @@ const CampgroundSchema = new Schema({
     image: String,
     price: Number,
     description: String,
-    location: String
+    location: String,
+    //we want to store review object id in campground db model
+    reviews: [
+        {
+        type: Schema.Types.ObjectId,
+            //referes to review model
+            ref: 'Review'
+        }
+    ]
 });
 
 //do not put quotes around CampgroundSchema
