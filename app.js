@@ -15,6 +15,7 @@ mongoose.connect("mongodb://localhost:27017/yelp-camp", {
   useNewUrlParser: true,
   useCreateIndex: true,
   useUnifiedTopology: true,
+  useFindAndModify: false
 });
 
 //logic to check for error in connecting monodb
@@ -115,8 +116,14 @@ app.post('/campgrounds/:id/reviews', validateReview, catchAsync(async (req, res)
 }));
 
 app.delete('/campgrounds/:id/reviews/:reviewId', catchAsync(async (req, res) => {
-  res.send('Delete meeeeee');
-}))
+  const { id, reviewId } = req.params;
+  //pull operator removes from existing array all instances of a value or specified condition
+  //pulls from reviews array and gets reviewId and updates campground to remove review from page
+  await Campground.findByIdAndUpdate(id, { $pull: { reviews: reviewId } });
+  //takes reviewId and deletes 
+  await Review.findByIdAndDelete(reviewId);
+  res.redirect(`/campgrounds/${id}`);
+}));
 
 //only runs if nothing else manages error
 //appilied on all routes
