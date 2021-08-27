@@ -78,6 +78,8 @@ passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
 app.use((req, res, next) => {
+  console.log(req.session);
+  res.locals.currentUser = req.user;
   //automatically have access to this in templete
   //do not have to pass through, put before route handlers
   res.locals.success = req.flash('success');
