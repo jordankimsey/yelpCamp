@@ -23,25 +23,34 @@ const sample = array => array[Math.floor(Math.random() * array.length)];
 
 const seedDB = async () => {
     await Campground.deleteMany({});
-    for (let i = 0; i < 50; i++) {
+    for (let i = 0; i < 200; i++) {
         const random1000 = Math.floor(Math.random() * 1000);
         const price = Math.floor(Math.random() * 20) + 10;
         const camp = new Campground({
+            //Your user ID
             author: '61290152bab2d9774ff01d04',
             location: `${cities[random1000].city}, ${cities[random1000].state}`,
             title: `${sample(descriptors)} ${sample(places)}`,
+            description: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Possimus adipisci repudiandae necessitatibus a esse sunt incidunt, error, aut accusantium, dolores et similique numquam quos dignissimos! Quod dolores quibusdam facilis exercitationem!',
+            price,
+            geometry: {
+                type: 'Point',
+                coordinates: [
+                    cities[random1000].longitude,
+                    cities[random1000].latitude,
+                ]
+            },
             images: [
                 {
-                  url: 'https://res.cloudinary.com/dupnoeem7/image/upload/v1630692149/YelpCamp/v6pgbmn6ptl11ydyoxe9.jpg',
-                  filename: 'YelpCamp/v6pgbmn6ptl11ydyoxe9'
+                  url: 'https://res.cloudinary.com/dupnoeem7/image/upload/v1630884628/YelpCamp/hwjehisqedyqnwwakjki.jpg',
+                  filename: 'YelpCamp/hwjehisqedyqnwwakjki'
                 },
                 {
-                  url: 'https://res.cloudinary.com/dupnoeem7/image/upload/v1630692149/YelpCamp/cgvpvnydvohvsecgrcau.jpg',
-                  filename: 'YelpCamp/cgvpvnydvohvsecgrcau'
+                  url: 'https://res.cloudinary.com/dupnoeem7/image/upload/v1630884628/YelpCamp/gqi9aebsozbiuhnrp0kq.jpg',
+                  filename: 'YelpCamp/gqi9aebsozbiuhnrp0kq'
                 }
               ],
-            description: 'Lorem, ipsum dolor sit amet consectetur adipisicing elit. Possimus adipisci repudiandae necessitatibus a esse sunt incidunt, error, aut accusantium, dolores et similique numquam quos dignissimos! Quod dolores quibusdam facilis exercitationem!',
-            price     
+            
         })
         await camp.save();
     }
